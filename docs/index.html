@@ -139,7 +139,7 @@
         // Send the token to Unity
         function SendAccessTokenToUnity(token) {
             if (typeof unityInstance !== 'undefined') {
-                unityInstance.SendMessage('YourUnityGameObject', 'OnAzureADLoginSuccess', token);
+                unityInstance.SendMessage('GameManager', 'ReceiveDataFromJS', token);
             }
         }
 
