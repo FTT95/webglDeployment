@@ -75,7 +75,7 @@
 
     <script src="https://alcdn.msauth.net/browser/2.22.0/js/msal-browser.min.js"></script>
     <script>
-
+        let token = ''
         // const msalConfig = {
         //     auth: {
         //         clientId: "6675f9fc-3942-4136-9bdb-879f7c53d0e3",
@@ -131,6 +131,7 @@
             msalInstance.loginPopup({ scopes: ["openid", "profile", "email"] })
                 .then(response => {
                     console.log("Access Token:", response.accessToken);
+                    token =response.accessToken;
                 })
                 .catch(error => console.error("Login Failed:", error));
         }
