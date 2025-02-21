@@ -131,7 +131,6 @@
             msalInstance.loginPopup({ scopes: ["openid", "profile", "email"] })
                 .then(response => {
                     console.log("Access Token:", response.accessToken);
-                    SendAccessTokenToUnity(response.accessToken);
                 })
                 .catch(error => console.error("Login Failed:", error));
         }
@@ -209,6 +208,8 @@
         script.onload = () => {
           createUnityInstance(canvas, config, (progress) => {
             progressBarFull.style.width = 100 * progress + "%";
+            unityInstance.SendMessage('GameManager', 'ReceiveDataFromJS', token);
+
           }).then((unityInstance) => {
             loadingBar.style.display = "none";
             fullscreenButton.onclick = () => {
