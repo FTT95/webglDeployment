@@ -208,9 +208,9 @@
         script.onload = () => {
           createUnityInstance(canvas, config, (progress) => {
             progressBarFull.style.width = 100 * progress + "%";
-            unityInstance.SendMessage('GameManager', 'ReceiveDataFromJS', token);
 
           }).then((unityInstance) => {
+            unityInstance.SendMessage('GameManager', 'ReceiveDataFromJS', token);
             loadingBar.style.display = "none";
             fullscreenButton.onclick = () => {
               unityInstance.SetFullscreen(1);
