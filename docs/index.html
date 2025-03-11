@@ -57,77 +57,34 @@
     }
 
 
-        /* Custom loading bar styling */
-        #unity-loading-bar {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-
-        /* Fullscreen button overlay */
-        #unity-fullscreen-button {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 64px;
-            height: 64px;
-            background-size: contain;
-            cursor: pointer;
-            z-index: 20;
-        }
-
-        /* Custom logo styling */
-        #custom-logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 150px;
-            z-index: 30;
-        }
-        
-    
-        #unity-container {
-          display: none;
-          position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    #unity-container {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: url('background.png') no-repeat center center/cover;
     }
 
-    #unity-canvas {
-            width: 100%;
-            height: 100%;
-            outline: none;
-        }
+    #unity-progress-bar-empty {
+      position: relative;
+      width: 400px;
+      height: 20px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.2);
+    }
 
-
-        #unity-progress-bar-empty {
-            width: 400px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        #unity-progress-bar-full {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #ff00ff, #8a2be2);
-            transition: width 0.2s;
-        }
-        
-
+    #unity-progress-bar-full {
+      height: 100%;
+      border-radius: 15px;
+      background: linear-gradient(90deg, #ff00ff, #8a2be2);
+      width: 0%;
+      transition: width 0.2s;
+    }
 
     .login-container {
       background: #fff;
@@ -168,8 +125,7 @@
       bottom: 10px;
       width: 100%;
       text-align: center;
-      z-index: 15;
-
+    
     }
 
     .footer a {
