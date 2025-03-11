@@ -22,12 +22,6 @@
       color: white;
     }
 
-/* Full-Screen Canvas */
-#unity-canvas {
-  width: 100%;
-  height: 100%;
-  display: block; /* Removes canvas inline space */
-}
     #background {
       position: absolute;
       top: 0;
@@ -64,17 +58,26 @@
 
 
     #unity-container {
-      display: none;
-      position: absolute;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      width: 100%;
-      height: 100%;
+
+      display: grid;
+      grid-template-columns: 1fr;          /* One column layout */
+      grid-template-rows: 10vh 80vh 10vh;  /* First & Last = 10vh, Middle = 80vh */
+      min-height: 100vh;                   /* Ensure full viewport height */
+      background: #121212;                 /* Dark background */
+      color: white;        
       z-index: 1000; 
       background: url('LoadingScreen.png') no-repeat center center/cover;
     }
 
+ /* Grid Items (Rows) */
+ .grid-item {
+      display: flex;              /* Center content vertically & horizontally */
+      align-items: center;        
+      justify-content: center;    
+      padding: 20px;              
+      border-radius: 12px;        /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
 /* Custom Loading Screen */
 #custom-loading {
@@ -177,12 +180,12 @@
   <!-- Unity Container -->
   <div id="unity-container" class="unity-desktop">
 
-    <canvas id="unity-canvas" width=100% height=100% tabindex="-1" style="display: none"></canvas>
+    <canvas id="unity-canvas" width="window.innerWidth" height="window.innerHeight" tabindex="-1" style="display: none" class="grid-item"></canvas>
     
   <!-- Custom Loading Screen -->
   <div id="custom-loading">
-    <p id="loading-text">Loading...</p>
-    <div id="unity-loading-bar">
+    <p id="loading-text" class="grid-item">Loading...</p>
+    <div id="unity-loading-bar" class="grid-item">
       <div id="unity-progress-bar-empty">
         <div id="unity-progress-bar-full"></div>
       </div>
