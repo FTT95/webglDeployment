@@ -68,16 +68,7 @@
       z-index: 1000; 
       background: url('LoadingScreen.png') no-repeat center center/cover;
     }
-
- /* Grid Items (Rows) */
- .grid-item {
-      display: flex;              /* Center content vertically & horizontally */
-      align-items: center;        
-      justify-content: center;    
-      padding: 20px;              
-      border-radius: 12px;        /* Rounded corners */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+    
 
 /* Custom Loading Screen */
 #custom-loading {
@@ -88,22 +79,36 @@
 }
 /* Loading Text - Space Below the Text */
 #loading-text {
+  display: flex;              /* Center content vertically & horizontally */
+      align-items: center;        
+      justify-content: center;    
+      padding: 20px;              
+      border-radius: 12px;        /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   color: white;
   font-size: 1.5rem;
-  margin-bottom: 40px; /* Add margin to separate text from the bar */
 }
 
 }
     #unity-progress-bar-empty {
-      position: relative;
-      width: 400px;
-      height: 20px;
+      display: flex;              /* Center content vertically & horizontally */
+      align-items: center;        
+      justify-content: center;    
+      padding: 20px;              
+      border-radius: 12px;        /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       border-radius: 15px;
       background: rgba(255, 255, 255, 0.2);
     }
 
     #unity-progress-bar-full {
-      height: 100%;
+      
+      display: flex;              /* Center content vertically & horizontally */
+      align-items: center;        
+      justify-content: center;    
+      padding: 20px;              
+      border-radius: 12px;        /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       border-radius: 15px;
       background: linear-gradient(90deg, #ff00ff, #8a2be2);
       width: 0%;
@@ -180,12 +185,12 @@
   <!-- Unity Container -->
   <div id="unity-container" class="unity-desktop">
 
-    <canvas id="unity-canvas" width="window.innerWidth" height="window.innerHeight" tabindex="-1" style="display: none" class="grid-item"></canvas>
+    <canvas id="unity-canvas" width="window.innerWidth" height="window.innerHeight" tabindex="-1" style="display: none"></canvas>
     
   <!-- Custom Loading Screen -->
   <div id="custom-loading">
-    <p id="loading-text" class="grid-item">Loading...</p>
-    <div id="unity-loading-bar" class="grid-item">
+    <p id="loading-text">Loading...</p>
+    <div id="unity-loading-bar">
       <div id="unity-progress-bar-empty">
         <div id="unity-progress-bar-full"></div>
       </div>
