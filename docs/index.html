@@ -185,6 +185,9 @@
                 .then(response => {
                     console.log("Access Token:", response.accessToken);
                     token =response.accessToken;
+
+                    startScreen.style.display = "none"; // Hide start screen
+                    unityContainer.style.display = "block"; // Show Unity container
                 })
                 .catch(error => console.error("Login Failed:", error));
         }
@@ -197,12 +200,13 @@
         }
 
       var startScreen = document.getElementById("start-screen");
-      var startButton = document.getElementById("start-button");
+      //var startButton = document.getElementById("start-button");
       var unityContainer = document.getElementById("unity-container");
 
-      startButton.addEventListener("click", function() {
+      /*startButton.addEventListener("click", function() {
         startScreen.style.display = "none"; // Hide start screen
         unityContainer.style.display = "block"; // Show Unity container
+      */
 
         // Start loading Unity
         var container = document.querySelector("#unity-container");
