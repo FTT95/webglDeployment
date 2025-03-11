@@ -1,108 +1,161 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity WebGL Player | CareApp</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <style>
-      body, html {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #222;
-        font-family: Arial, sans-serif;
-        color: white;
-      }
-      #start-screen {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: black;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      }
-      #start-button {
-        padding: 20px 40px;
-        font-size: 24px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-      #start-button:hover {
-        background-color: #45a049;
-      }
-      #unity-container {
-        display: none; /* Hide Unity container initially */
-      }
-    </style>
-  </head>
-  <body>
 
-    <!-- Start Screen -->
-    <div id="start-screen">
-      <h1>Welcome to CareApp</h1>
-      <button id="start-button">Start Game</button>
-      <button onclick="signInWithAzureAD()">Login with Azure AD</button>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unity WebGL Player | CareApp</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    #background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 90%;
+      background: url('background.png') no-repeat center center/cover;
+    }
+
+    #start-screen {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    #start-button {
+      padding: 20px 40px;
+      font-size: 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #start-button:hover {
+      background-color: #45a049;
+    }
+
+    #unity-container {
+      display: none;
+    }
+
+    .login-container {
+      background: #fff;
+      border-radius: 24px;
+      padding: 60px;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      width: 350px;
+      height: 170px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo {
+      width: 250px;
+      margin-bottom: 40px;
+    }
+
+    .login-button {
+      padding: 20px 50px;
+      font-size: 20px;
+      color: white;
+      background: #9c27b0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .login-button:hover {
+      background: #7b1fa2;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+    
+    }
+
+    .footer a {
+      color: rgb(0, 0, 0);
+      text-decoration: none;
+      margin: 0 15px;
+      cursor: pointer;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background Image -->
+  <div id="background"></div>
+
+  <!-- Start Screen -->
+  <div id="start-screen">
+    <div class="login-container">
+      <img src="logo.png" alt="VODAX Logo" class="logo">
+      <button class="login-button" onclick="signInWithAzureAD()">Log in with company SSO</button>
     </div>
+  </div>
 
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
-        </div>
-      </div>
-      <div id="unity-warning"> </div>
-      <div id="unity-footer">
-        <div id="unity-webgl-logo"></div>
-        <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">CareApp</div>
+  <!-- Unity Container -->
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
       </div>
     </div>
+    <div id="unity-warning"></div>
+    <div id="unity-footer">
+      <div id="unity-webgl-logo"></div>
+      <div id="unity-fullscreen-button"></div>
+      <div id="unity-build-title">CareApp</div>
+    </div>
+  </div>
 
-    <script src="https://alcdn.msauth.net/browser/2.22.0/js/msal-browser.min.js"></script>
-    <script>
-        let token = ''
-        // const msalConfig = {
-        //     auth: {
-        //         clientId: "6675f9fc-3942-4136-9bdb-879f7c53d0e3",
-        //         authority: "https://login.microsoftonline.com/51df2127-6347-45b3-9028-41a2e08f8662",
-        //         redirectUri: "https://localhost:5001/auth/callback"
-        //     }
-        // };
+  <!-- Footer Links -->
+  <div class="footer">
+    <a href="#">Privacy</a>
+    <a href="#">Tobi</a>
+    <a href="#">Help</a>
+  </div>
 
-        // const msalInstance = new msal.PublicClientApplication(msalConfig);
+  <script src="https://alcdn.msauth.net/browser/2.22.0/js/msal-browser.min.js"></script>
 
-        // function signInWithAzureAD() {
-        //     msalInstance.loginPopup({ scopes: ["openid", "profile", "email"] })
-        //         .then(response => {
-        //             console.log("Access Token:", response.accessToken);
-        //             SendAccessTokenToUnity(response.accessToken);
-        //         })
-        //         .catch(error => console.error("Login Failed:", error));
-        // }
-
-        // function SendAccessTokenToUnity(token) {
-        //     // Unity instance must be available to send messages
-        //     if (typeof unityInstance !== 'undefined') {
-        //         unityInstance.SendMessage('YourUnityGameObject', 'OnAzureADLoginSuccess', token);
-        //     }
-        // }
-
-                // Declare msalInstance in a higher scope
+  <script>
+    
+        // Declare msalInstance in a higher scope
         let msalInstance;
 
         // Initialize MSAL after the page loads
@@ -209,7 +262,6 @@
         script.onload = () => {
           createUnityInstance(canvas, config, (progress) => {
             progressBarFull.style.width = 100 * progress + "%";
-
           }).then((unityInstance) => {
             unityInstance.SendMessage('GameManager', 'ReceiveDataFromJS', token);
             loadingBar.style.display = "none";
@@ -224,4 +276,5 @@
       });
     </script>
   </body>
+
 </html>
