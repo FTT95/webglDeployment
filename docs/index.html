@@ -56,8 +56,29 @@
       background-color: #45a049;
     }
 
+
     #unity-container {
       display: none;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #unity-progress-bar-empty {
+      position: relative;
+      width: 400px;
+      height: 20px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    #unity-progress-bar-full {
+      height: 100%;
+      border-radius: 15px;
+      background: linear-gradient(90deg, #ff00ff, #8a2be2);
+      width: 0%;
+      transition: width 0.2s;
     }
 
     .login-container {
@@ -129,6 +150,7 @@
 
   <!-- Unity Container -->
   <div id="unity-container" class="unity-desktop">
+    
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
     <div id="unity-loading-bar">
       <div id="unity-logo"></div>
@@ -136,7 +158,9 @@
         <div id="unity-progress-bar-full"></div>
       </div>
     </div>
+    
     <div id="unity-warning"></div>
+
     <div id="unity-footer">
       <div id="unity-webgl-logo"></div>
       <div id="unity-fullscreen-button"></div>
@@ -198,9 +222,6 @@
                     console.log("Access Token:", response.accessToken);
                     token =response.accessToken;
 
-                    startScreen.style.display = "none"; // Hide start screen
-                    unityContainer.style.display = "block"; // Show Unity container
-
         startScreen.style.display = "none"; // Hide start screen
         unityContainer.style.display = "block"; // Show Unity container
       
@@ -261,6 +282,7 @@
         var script = document.createElement("script");
         script.src = loaderUrl;
         script.onload = () => {
+          unityInstance.SetFullscreen(1);
           createUnityInstance(canvas, config, (progress) => {
             progressBarFull.style.width = 100 * progress + "%";
           }).then((unityInstance) => {
