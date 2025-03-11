@@ -72,7 +72,7 @@
 
 /* Custom Loading Screen */
 #custom-loading {
-  position: absolute;
+  position: fixed;
   bottom: 5%; /* Position at bottom */
   left: 50%;
   transform: translateX(-50%);
@@ -85,7 +85,6 @@
   font-size: 1.5rem;
   margin-bottom: 10px; /* Space between text and bar */
 }
-
     #unity-progress-bar-empty {
       position: relative;
       width: 400px;
@@ -94,23 +93,13 @@
       background: rgba(255, 255, 255, 0.2);
     }
 
-/* Loading Bar Container */
-#unity-loading-bar {
-  width: 80vw; /* 80% of the viewport width */
-  max-width: 600px; /* Limit max size */
-  height: 20px; /* Bar height */
-  background: #444; /* Bar background */
-  border-radius: 10px; /* Rounded corners */
-  overflow: hidden;
-}
-
-/* Loading Progress (Inner Bar) */
-#unity-progress-bar-full {
-  height: 100%;
-  width: 0%; /* Start empty */
-  background: linear-gradient(90deg, #a100ff, #ff00d4);
-  transition: width 0.5s ease;
-}
+    #unity-progress-bar-full {
+      height: 100%;
+      border-radius: 15px;
+      background: linear-gradient(90deg, #ff00ff, #8a2be2);
+      width: 0%;
+      transition: width 0.2s;
+    }
 
     .login-container {
       background: #fff;
