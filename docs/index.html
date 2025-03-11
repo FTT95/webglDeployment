@@ -66,8 +66,25 @@
       width: 100%;
       height: 100%;
       z-index: 1000; 
-      background: url('background.png') no-repeat center center/cover;
+      background: url('LoadingScreen.png') no-repeat center center/cover;
     }
+
+
+/* Custom Loading Screen */
+#custom-loading {
+  position: absolute;
+  bottom: 5%; /* Position at bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+/* Loading Text */
+#loading-text {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 10px; /* Space between text and bar */
+}
 
     #unity-progress-bar-empty {
       position: relative;
@@ -77,13 +94,23 @@
       background: rgba(255, 255, 255, 0.2);
     }
 
-    #unity-progress-bar-full {
-      height: 100%;
-      border-radius: 15px;
-      background: linear-gradient(90deg, #ff00ff, #8a2be2);
-      width: 0%;
-      transition: width 0.2s;
-    }
+/* Loading Bar Container */
+#unity-loading-bar {
+  width: 80vw; /* 80% of the viewport width */
+  max-width: 600px; /* Limit max size */
+  height: 20px; /* Bar height */
+  background: #444; /* Bar background */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden;
+}
+
+/* Loading Progress (Inner Bar) */
+#unity-progress-bar-full {
+  height: 100%;
+  width: 0%; /* Start empty */
+  background: linear-gradient(90deg, #a100ff, #ff00d4);
+  transition: width 0.5s ease;
+}
 
     .login-container {
       background: #fff;
@@ -156,12 +183,17 @@
   <div id="unity-container" class="unity-desktop">
 
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="display: none"></canvas>
+    
+  <!-- Custom Loading Screen -->
+  <div id="custom-loading">
+    <p id="loading-text">Loading...</p>
     <div id="unity-loading-bar">
       <div id="unity-progress-bar-empty">
         <div id="unity-progress-bar-full"></div>
       </div>
     </div>
-    
+  </div>
+
     <div id="unity-warning"></div>
 
     <div id="unity-footer">
