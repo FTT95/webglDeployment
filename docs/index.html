@@ -177,6 +177,28 @@
   font-size: 24px;  /* Adjust the font size if needed */
   font-weight: bold;  /* Optional: make the text bolder for better visibility */
 }
+
+/* Position the footer on top of the canvas */
+#unity-footer {
+  position: absolute;
+  top: 10px;  /* Distance from the top of the viewport */
+  left: 50%;
+  transform: translateX(-50%); /* Center it horizontally */
+  z-index: 1000;  /* Ensure it's above the canvas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;  /* Ensure it takes the full width of the viewport */
+}
+
+/* Adjusting #unity-fullscreen-button and #unity-build-title to look good on top */
+#unity-fullscreen-button,
+#unity-build-title {
+  color: white;  /* Ensure the text is visible against the background */
+  font-size: 16px;
+  margin: 0 10px;
+}
+
   </style>
 </head>
 
