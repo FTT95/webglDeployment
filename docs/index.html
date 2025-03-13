@@ -89,6 +89,20 @@
   margin-bottom: 40px; /* Add margin to separate text from the bar */
 }
 
+/* Center Loading Text and Progress Bar */
+#unity-loading-bar {
+  position: absolute;
+  top: 50%;  /* Centers vertically */
+  left: 50%; /* Centers horizontally */
+  transform: translate(-50%, -50%); /* Adjusts the position to truly center */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+
     #unity-progress-bar-empty {
       position: relative;
       width: 400px;
