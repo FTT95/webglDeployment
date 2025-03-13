@@ -77,10 +77,12 @@
 
 /* Custom Loading Screen */
 #custom-loading {
-  position: fixed;
-  bottom: 5%; /* Position at bottom */
-  transform: translateX(-50%);
-  text-align: center;
+  position: fixed;         /* Fixed position so it stays in place when scrolling */
+  top: 50%;                /* Vertically center the loading screen */
+  left: 50%;               /* Horizontally center the loading screen */
+  transform: translate(-50%, -50%); /* Shift the div back by 50% of its width and height */
+  text-align: center;      /* Center the text inside the loading screen */
+  z-index: 10000; 
 }
 /* Loading Text - Space Below the Text */
 #loading-text {
@@ -359,6 +361,12 @@
             loadingBar.style.display = "none";
             document.getElementById('unity-canvas').style.display = 'block';
             document.getElementById('loading-text').style.display = 'none';
+            var unityFooter = document.getElementById('unity-footer');
+    unityFooter.style.position = 'absolute'; // Make sure it's positioned above
+    unityFooter.style.top = '10px';  // Distance from the top of the viewport
+    unityFooter.style.left = '50%';
+    unityFooter.style.transform = 'translateX(-50%)';  // Center it horizontally
+    unityFooter.style.zIndex = '10000';
             fullscreenButton.onclick = () => {
               unityInstance.SetFullscreen(1);
             };
