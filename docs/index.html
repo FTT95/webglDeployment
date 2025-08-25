@@ -1,385 +1,143 @@
 <!DOCTYPE html>
 <html lang="en-us">
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unity WebGL Player | CareApp</title>
-  <link rel="shortcut icon" href="TemplateData/favicon.ico">
-  <link rel="stylesheet" href="TemplateData/style.css">
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      color: white;
-    }
-/* Full-Screen Canvas */
-#unity-canvas {
-  width: 100%;
-  height: 100%;
-  display: block; /* Removes canvas inline space */
-}
-    #background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 90%;
-      background: url('background.png') no-repeat center center/cover;
-    }
-
-    #start-screen {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    #start-button {
-      padding: 20px 40px;
-      font-size: 24px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    #start-button:hover {
-      background-color: #45a049;
-    }
-
-
-     #unity-container {
-      display: none;
-      position: absolute;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      width: 100%;
-      height: 100%;
-      z-index: 1000; 
-      background: url('LoadingScreen.png') no-repeat center center/cover;
-    }
-
-
-/* Custom Loading Screen */
-#custom-loading {
-  position: fixed;         /* Fixed position so it stays in place when scrolling */
-  top: 92%;                /* Vertically center the loading screen */
-  left: 50%;               /* Horizontally center the loading screen */
-  transform: translate(-50%, -50%); /* Shift the div back by 50% of its width and height */
-  text-align: center;      /* Center the text inside the loading screen */
-  z-index: 10000; 
-}
-/* Loading Text - Space Below the Text */
-#loading-text {
-  color: white;
-  font-size: 1.5rem;
-  margin-bottom: 40px;  /* Add margin to separate text from the bar */
-}
-
-/* Center Loading Text and Progress Bar */
-#unity-loading-bar {
-  position: absolute;
-  top: 65%;  /* Centers vertically */
-  left: 50%; /* Centers horizontally */
-  transform: translate(-50%, -50%); /* Adjusts the position to truly center */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-
-    #unity-progress-bar-empty {
-      position: relative;
-      width: 400px;
-      height: 20px;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    #unity-progress-bar-full {
-      height: 100%;
-      border-radius: 15px;
-      background: linear-gradient(90deg, #ff00ff, #8a2be2);
-      width: 0%;
-      transition: width 0.2s;
-    }
-
-    .login-container {
-      background: #fff;
-      border-radius: 24px;
-      padding: 60px;
-      text-align: center;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-      width: 350px;
-      height: 170px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .logo {
-      width: 250px;
-      margin-bottom: 40px;
-    }
-
-    .login-button {
-      padding: 20px 50px;
-      font-size: 20px;
-      color: white;
-      background: #9c27b0;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .login-button:hover {
-      background: #7b1fa2;
-    }
-
-    .footer {
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-    
-    }
-
-    .footer a {
-      color: rgb(0, 0, 0);
-      text-decoration: none;
-      margin: 0 15px;
-      cursor: pointer;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    #unity-build-title {
-  color: #333;  /* Dark color to make it visible on white background */
-  font-size: 24px;  /* Adjust the font size if needed */
-  font-weight: bold;  /* Optional: make the text bolder for better visibility */
-}
-
-/* Position the footer on top of the canvas */
-#unity-footer {
-  position: absolute;
-  top: 10px;  /* Distance from the top of the viewport */
-  left: 50%;
-  transform: translateX(-50%); /* Center it horizontally */
-  z-index: 1000;  /* Ensure it's above the canvas */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;  /* Ensure it takes the full width of the viewport */
-}
-
-/* Adjusting #unity-fullscreen-button and #unity-build-title to look good on top */
-#unity-fullscreen-button,
-#unity-build-title {
-  color: white;  /* Ensure the text is visible against the background */
-  font-size: 16px;
-  margin: 0 10px;
-}
-
-  </style>
-</head>
-
-<body>
-  <!-- Background Image -->
-  <div id="background"></div>
-
-  <!-- Start Screen -->
-  <div id="start-screen">
-    <div class="login-container">
-      <img src="logo.png" alt="VODAX Logo" class="logo">
-      <button class="login-button" onclick="signInWithAzureAD()">Log in with company SSO</button>
-    </div>
-  </div>
-
-  <!-- Unity Container -->
-  <div id="unity-container" class="unity-desktop">
-
-    <canvas id="unity-canvas" width=100% height=100% tabindex="-1" style="display: none"></canvas>
-    
-  <!-- Custom Loading Screen -->
-  <div id="custom-loading">
-    <p id="loading-text">Loading...</p>
-    <div id="unity-loading-bar">
-      <div id="unity-progress-bar-empty">
-        <div id="unity-progress-bar-full"></div>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | CareApp</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+      <div id="unity-warning"> </div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">CareApp</div>
       </div>
     </div>
-  </div>
+    <script>
 
-    <div id="unity-warning"></div>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
 
-    <div id="unity-footer">
-      <div id="unity-fullscreen-button"></div>
-      <div id="unity-build-title">CareApp</div>
-    </div>
-  </div>
-
-  <!-- Footer Links -->
-  <div class="footer">
-    <a href="#">Privacy</a>
-    <a href="#">Tobi</a>
-    <a href="#">Help</a>
-  </div>
-
-  <script src="https://alcdn.msauth.net/browser/2.22.0/js/msal-browser.min.js"></script>
-
-  <script>
-    
-        // Declare msalInstance in a higher scope
-        let msalInstance;
-
-        // Initialize MSAL after the page loads
-        window.onload = function () {
-
-
-        const msalConfig = {
-            auth: {
-                clientId: "6675f9fc-3942-4136-9bdb-879f7c53d0e3",
-                authority: "https://login.microsoftonline.com/51df2127-6347-45b3-9028-41a2e08f8662",
-                redirectUri: "https://ftt95.github.io/webglDeployment/"//"https://localhost:5001/auth/callback"
-            }
-         };
-
-            // Create the MSAL instance
-            msalInstance = new msal.PublicClientApplication(msalConfig);
-        };
-
-        // Send the token to Unity
-        function SendAccessTokenToUnity(token) {
-            if (typeof unityInstance !== 'undefined') {
-                unityInstance.SendMessage('GameManager', 'ReceiveDataFromJS', token);
-            }
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
         }
-
-      var startScreen = document.getElementById("start-screen");
-      //var startButton = document.getElementById("start-button");
-      var unityContainer = document.getElementById("unity-container");
-
-
-        // Sign-in function
-        function signInWithAzureAD() {
-            if (!msalInstance) {
-                console.error("MSAL instance is not initialized yet!");
-                return;
-            }
-
-            msalInstance.loginPopup({ scopes: ["openid", "profile", "email"] })
-                .then(response => {
-                    console.log("Access Token:", response.accessToken);
-                    token =response.accessToken;
-
-        startScreen.style.display = "none"; // Hide start screen
-        unityContainer.style.display = "block"; // Show Unity container
-      
-
-        // Start loading Unity
-        var container = document.querySelector("#unity-container");
-        var canvas = document.querySelector("#unity-canvas");
-        var loadingBar = document.querySelector("#unity-loading-bar");
-        var progressBarFull = document.querySelector("#unity-progress-bar-full");
-        var fullscreenButton = document.querySelector("#unity-fullscreen-button");
-        var warningBanner = document.querySelector("#unity-warning");
-
-        function unityShowBanner(msg, type) {
-          function updateBannerVisibility() {
-            warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
-          }
-          var div = document.createElement('div');
-          div.innerHTML = msg;
-          warningBanner.appendChild(div);
-          if (type == 'error') div.style = 'background: red; padding: 10px;';
-          else {
-            if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-            setTimeout(function() {
-              warningBanner.removeChild(div);
-              updateBannerVisibility();
-            }, 5000);
-          }
-          updateBannerVisibility();
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
         }
+        updateBannerVisibility();
+      }
 
-        var buildUrl = "Build";
-        var loaderUrl = buildUrl + "/Build.loader.js";
-        var config = {
-          dataUrl: buildUrl + "/Build.data",
-          frameworkUrl: buildUrl + "/Build.framework.js",
-          codeUrl: buildUrl + "/Build.wasm",
-          streamingAssetsUrl: "StreamingAssets",
-          companyName: "DefaultCompany",
-          productName: "CareApp",
-          productVersion: "1.0",
-          showBanner: unityShowBanner,
-        };
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/Build.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/Build.data",
+        frameworkUrl: buildUrl + "/Build.framework.js",
+        codeUrl: buildUrl + "/Build.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "CareApp",
+        productVersion: "1.0",
+        showBanner: unityShowBanner,
+      };
 
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-          var meta = document.createElement('meta');
-          meta.name = 'viewport';
-          meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-          document.getElementsByTagName('head')[0].appendChild(meta);
-          container.className = "unity-mobile";
-          canvas.className = "unity-mobile";
-        } else {
-          canvas.style.width = "100vw";
-          canvas.style.height = "100vh";
-        }
+      // By default, Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
 
-        loadingBar.style.display = "block";
+      // If you would like all file writes inside Unity Application.persistentDataPath
+      // directory to automatically persist so that the contents are remembered when
+      // the user revisits the site the next time, uncomment the following line:
+      // config.autoSyncPersistentDataPath = true;
+      // This autosyncing is currently not the default behavior to avoid regressing
+      // existing user projects that might rely on the earlier manual
+      // JS_FileSystem_Sync() behavior, but in future Unity version, this will be
+      // expected to change.
 
-        var script = document.createElement("script");
-        script.src = loaderUrl;
-        script.onload = () => {
-          createUnityInstance(canvas, config, (progress) => {
-            container.style.display = "block";
-            progressBarFull.style.width = 100 * progress + "%";
-          }).then((unityInstance) => {
-            unityInstance.SendMessage('GameManager', 'ReceiveDataFromJS', token);
-            loadingBar.style.display = "none";
-            document.getElementById('unity-canvas').style.display = 'block';
-            document.getElementById('loading-text').style.display = 'none';
-            var unityFooter = document.getElementById('unity-footer');
-    unityFooter.style.position = 'absolute'; // Make sure it's positioned above
-    unityFooter.style.top = '10px';  // Distance from the top of the viewport
-    unityFooter.style.left = '50%';
-    unityFooter.style.transform = 'translateX(-50%)';  // Center it horizontally
-    unityFooter.style.zIndex = '10000';
-            fullscreenButton.onclick = () => {
-              unityInstance.SetFullscreen(1);
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
+
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+
+
+      } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+              }).then((unityInstance) => {
+                loadingBar.style.display = "none";
+
+  function ReceiveDataFromJS() {
+    var token = localStorage.getItem("ssoToken");
+    var envData = localStorage.getItem("url");
+    if (unityInstance ) {
+          //console.log("📦 Token from localStorage:", token); // ✅ PRINT TO BROWSER CONSOLE
+
+      unityInstance.SendMessage("ReadDataFromWeb", "ReceiveDataFromJS", token);
+      unityInstance.SendMessage("ReadDataFromWeb", "ReceiveEnvDataFromJS", envData);
+    }
+  }
+                ReceiveDataFromJS();
+                fullscreenButton.onclick = () => {
+                  unityInstance.SetFullscreen(1);
+                };
+              }).catch((message) => {
+                alert(message);
+              });
             };
-          }).catch((message) => {
-            alert(message);
-          });
-        };
-        document.body.appendChild(script);
-                })
-                .catch(error => console.error("Login Failed:", error));
-        }
+
+      document.body.appendChild(script);
 
     </script>
   </body>
-
 </html>
