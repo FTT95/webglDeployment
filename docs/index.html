@@ -116,18 +116,6 @@
           progressBarFull.style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 loadingBar.style.display = "none";
-
-  function ReceiveDataFromJS() {
-    var token = localStorage.getItem("ssoToken");
-    var envData = localStorage.getItem("url");
-    if (unityInstance ) {
-          //console.log("📦 Token from localStorage:", token); // ✅ PRINT TO BROWSER CONSOLE
-
-      unityInstance.SendMessage("ReadDataFromWeb", "ReceiveDataFromJS", token);
-      unityInstance.SendMessage("ReadDataFromWeb", "ReceiveEnvDataFromJS", envData);
-    }
-  }
-                ReceiveDataFromJS();
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
